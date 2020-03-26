@@ -1,0 +1,12 @@
+pipeline{
+	agent any
+	
+	stages{
+		stage('check out'){
+			steps{
+				sh "touch check.txt"
+				git branch: 'master', credentialsId: 'GitKey', url: 'https://github.com/huntercen1992/ProxyServer.git'
+			}
+		}
+	}
+}

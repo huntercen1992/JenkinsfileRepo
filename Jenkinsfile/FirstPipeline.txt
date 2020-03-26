@@ -9,9 +9,15 @@ pipeline{
 			}
 		}
 		
-		stage('maven package'){
+		stage('Maven package'){
 			steps{
 				sh "mvn clean package"
+			}
+		}
+		
+		stage('Run jar'){
+			steps{
+				sh "java -jar ./target/*.jar"
 			}
 		}
 	}

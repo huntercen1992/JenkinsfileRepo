@@ -10,6 +10,8 @@ pipeline{
 		
 		stage('Maven package'){
 			steps{
+				sh "cp pom.${type}.xml pom.xml"
+				sh "cat pom.xml"
 				sh "mvn clean package"
 			}
 		}

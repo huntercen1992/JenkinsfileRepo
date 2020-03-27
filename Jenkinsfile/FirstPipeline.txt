@@ -10,7 +10,7 @@ pipeline{
 		
 		stage('Maven package'){
 			steps{
-				sh "cp pom.${type}.xml pom.xml"
+				sh "cp pom.${TYPE}.xml pom.xml"
 				sh "mvn clean package"
 			}
 		}
@@ -18,7 +18,7 @@ pipeline{
 		stage('Run jar'){
 			steps{								
 				script {
-					if( '${type}' = 'server'){
+					if( TYPE.equals("server")){
 						sh "scp -i /Users/cenyongheng/Desktop/huntercen.pem ./target/*.jar ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com:/home/ec2-user/upload"
 						sh "JENKINS_NODE_COOKIE=dontKillM ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com 'nohup java -jar /home/ec2-user/upload/*jar &'"
 					}else{

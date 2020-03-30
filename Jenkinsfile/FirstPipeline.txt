@@ -19,9 +19,17 @@ pipeline{
 		stage('Stop jar'){
 			steps{
 				script{
-					def PID = sh(script: "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'", returnStdout: true).trim()
-					if(PID != null && PID != ""){
-						sh "kill -9 ${PID}"
+					if( TYPE.equals("server") ){
+						def PID = sh(script: "ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com 'ps -e|grep proxyServer|grep -v grep|awk ''{print \$1}'''", returnStdout: true).trim()
+						if(PID != null && PID != ""){
+							sh "ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com 'kill -9 ${PID}'"
+						}
+					}
+					else{				
+						def PID = sh(script: "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'", returnStdout: true).trim()
+						if(PID != null && PID != ""){
+							sh "kill -9 ${PID}"
+						}
 					}
 				}
 			}

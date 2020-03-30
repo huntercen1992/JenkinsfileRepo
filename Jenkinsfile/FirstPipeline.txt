@@ -4,6 +4,7 @@ pipeline{
 	stages{
 		stage('Check out code from git'){
 			steps{
+				sh "rm -rf *"
 				git branch: 'master', credentialsId: 'GitKey', url: 'https://github.com/huntercen1992/ProxyServer.git'
 			}
 		}
@@ -18,8 +19,8 @@ pipeline{
 		stage('Stop jar'){
 			steps{
 				script{
-					def PID = sh "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'"
-					if(PID != null){
+					def PID = sh(script: "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'", returnStdout: true).trim()
+					if(PID != null && PID != ""){
 						sh "kill -9 ${PID}"
 					}
 				}
@@ -35,8 +36,7 @@ pipeline{
 					}else{
 						sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar ./target/*.jar &"
 					}
-				}
-				sh "rm -rf *"
+				}				
 			}
 		}
 	}

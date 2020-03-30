@@ -15,6 +15,12 @@ pipeline{
 			}
 		}
 		
+		stage('Stop jar'){
+			steps{
+				sh "kill -9 `ps -e|grep proxyClient|grep -v grep|awk '{print $1}'`"
+			}
+		}
+		
 		stage('Run jar'){
 			steps{								
 				script {

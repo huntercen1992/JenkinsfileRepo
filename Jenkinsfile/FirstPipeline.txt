@@ -15,22 +15,7 @@ pipeline{
 				sh "mvn clean package"
 			}
 		}
-		
-		stage('Stop jar'){
-			steps{
-				script{
-					if( TYPE.equals("server") ){
-						sh "ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com './upload/stopJar.sh'"
-					}
-					else{				
-						def PID = sh(script: "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'", returnStdout: true).trim()
-						if(PID != null && PID != ""){
-							sh "kill -9 ${PID}"
-						}
-					}
-				}
-			}
-		}
+
 		
 		stage('Run jar'){
 			steps{								

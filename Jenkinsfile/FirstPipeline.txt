@@ -17,7 +17,7 @@ pipeline{
 		
 		stage('Stop jar'){
 			steps{
-				sh "kill -9 `ps -e|grep proxyServer|grep -v grep|awk '{print $1}'`"
+				sh "kill -9 `ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'`"
 			}
 		}
 		

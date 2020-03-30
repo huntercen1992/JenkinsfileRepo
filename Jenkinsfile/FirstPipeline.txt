@@ -17,7 +17,12 @@ pipeline{
 		
 		stage('Stop jar'){
 			steps{
-				sh "kill -9 `ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'`"
+				script{
+					def PID = sh "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'"
+					if(PID != null){
+						sh "kill -9 ${PID}"
+					}
+				}
 			}
 		}
 		

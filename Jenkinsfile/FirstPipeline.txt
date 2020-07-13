@@ -20,7 +20,7 @@ pipeline{
 			steps{
 				script{
 					if( TYPE.equals("server") ){
-						sh "ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com './upload/stopJar.sh'"
+						sh "ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-52-221-182-91.ap-southeast-1.compute.amazonaws.com './upload/stopJar.sh'"
 					}
 					else{				
 						def PID = sh(script: "ps -e|grep proxyServer|grep -v grep|awk '{print \$1}'", returnStdout: true).trim()
@@ -36,8 +36,8 @@ pipeline{
 			steps{								
 				script {
 					if( TYPE.equals("server")){
-						sh "scp -i /Users/cenyongheng/Desktop/huntercen.pem ./target/*.jar ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com:/home/ec2-user/upload"
-						sh "JENKINS_NODE_COOKIE=dontKillMe nohup ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-54-255-236-129.ap-southeast-1.compute.amazonaws.com './upload/runJar.sh' &"
+						sh "scp -i /Users/cenyongheng/Desktop/huntercen.pem ./target/*.jar ec2-user@ec2-52-221-182-91.ap-southeast-1.compute.amazonaws.com:/home/ec2-user/upload"
+						sh "JENKINS_NODE_COOKIE=dontKillMe nohup ssh -i /Users/cenyongheng/Desktop/huntercen.pem ec2-user@ec2-52-221-182-91.ap-southeast-1.compute.amazonaws.com './upload/runJar.sh' &"
 					}else{
 						sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar ./target/*.jar &"
 					}
